@@ -50,6 +50,14 @@ docker compose exec -it claude-morning claude
 # log in from within the TUI
 ```
 
+### Option C: Deploy to Railway
+
+1. **Create Project**: Fork this repository or push it to your GitHub account and [Deploy to Railway](https://railway.app/new).
+2. **Add Volume**: In your Railway dashboard, go to the **Volumes** tab and add a new volume. Mount it to `/root/.claude`. This is required to keep your login state persistent across deployments.
+3. **Environment Variables**: In the **Variables** tab, set `CLAUDE_MORNING_CRON_SCHEDULE` and `TZ`.
+4. **Authenticate**: Install the [Railway CLI](https://docs.railway.app/guides/cli), then run `railway shell` in your terminal to access the container, and type `claude` to log in.
+
+
 ## Configuration
 
 | Environment variable         | Default           | Description                     |
