@@ -5,7 +5,7 @@ A lightweight Docker container that runs Claude Code on a daily schedule to keep
 ## How it works
 
 - Runs as a persistent container (24/7) via Docker Compose
-- A cron job fires `claude -p "ping"` at 8AM daily using Haiku (minimal cost)
+- A cron job fires `claude -p "ping"` starting at 8AM then every 5 hours (8, 13, 18, 23) using Haiku (minimal cost)
 - Auth state is persisted in `./data/` so you only log in once
 - Logs timestamp and cost to stdout on each run
 
@@ -23,7 +23,7 @@ services:
       - claude-data:/root/.claude
     command: daemon
     environment:
-      - CLAUDE_MORNING_CRON_SCHEDULE=0 8 * * *
+      - CLAUDE_MORNING_CRON_SCHEDULE=0 8-23/5 * * *
       - TZ=Asia/Bangkok
     restart: unless-stopped
 
@@ -62,18 +62,22 @@ docker compose exec -it claude-morning claude
 
 | Environment variable         | Default           | Description                     |
 |------------------------------|-------------------|---------------------------------|
-| `CLAUDE_MORNING_CRON_SCHEDULE`| `0 8 * * *`       | Cron schedule (comma-separated for multiple, e.g. `0 8 * * *,0 20 * * *`) |
+| `CLAUDE_MORNING_CRON_SCHEDULE`| `0 8-23/5 * * *`  | Cron schedule (comma-separated for multiple, e.g. `0 8-23/5 * * *` or `0 8 * * *,0 20 * * *`) |
 | `TZ`                    | (none/UTC)        | Timezone (e.g. `Asia/Bangkok`)   |
 
 ## Examples
 
-### Run at 6 AM in Tokyo timezone
+### Run starting at 8 AM then every 5 hours in Tokyo timezone
 
 ```yaml
 environment:
-  - CLAUDE_MORNING_CRON_SCHEDULE=0 6 * * *
+  - CLAUDE_MORNING_CRON_SCHEDULE=0 8-23/5 * * *
   - TZ=Asia/Tokyo
 ```
+
+## Quick testing
+
+For rapid verification, you can temporarily set `CLAUDE_MORNING_CRON_SCHEDULE=*/5 * * * *` to run every 5 minutes.
 
 ## Useful commands
 
