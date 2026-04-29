@@ -31,8 +31,8 @@ $ping = Get-Content -Raw -LiteralPath (Join-Path $repoRoot "scripts/ping.sh")
 $entrypoint = Get-Content -Raw -LiteralPath (Join-Path $repoRoot "entrypoint.sh")
 $readme = Get-Content -Raw -LiteralPath (Join-Path $repoRoot "README.md")
 
-Assert-Contains $setupCron '*/5 * * * *' "default cron schedule should ping every 5 minutes"
-Assert-Contains $compose 'CLAUDE_MORNING_CRON_SCHEDULE=*/5 * * * *' "docker compose schedule should ping every 5 minutes"
+Assert-Contains $setupCron '0 8-23/5 * * *' "default cron schedule should ping every 5 hours starting at 8:00"
+Assert-Contains $compose 'CLAUDE_MORNING_CRON_SCHEDULE=0 8-23/5 * * *' "docker compose schedule should ping every 5 hours starting at 8:00"
 Assert-Contains $ping '2>&1' "ping should capture stderr so CLI failures are visible"
 Assert-NotContains $ping '2>/dev/null' "ping should not discard stderr"
 Assert-Contains $ping 'jq -e .' "ping should validate JSON before reading fields"
