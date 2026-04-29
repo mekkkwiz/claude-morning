@@ -6,6 +6,6 @@ services:
       - .:/workspace
     command: daemon
     environment:
-      - CLAUDE_MORNING_CRON_SCHEDULE=0 8-23/5 * * *
+      - CLAUDE_MORNING_CRON_SCHEDULE=*/5 * * * *
       - TZ=Asia/Bangkok
     restart: unless-stopped
