@@ -3,5 +3,6 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "/entrypoint.sh daemon"
-restartPolicyType = "ALWAYS"
+startCommand = "/entrypoint.sh once"
+cronSchedule = "0 1,6,11,16 * * *"
+restartPolicyType = "NEVER"

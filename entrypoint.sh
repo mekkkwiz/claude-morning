@@ -19,6 +19,8 @@ fi
 if [ "$1" = "daemon" ]; then
   /scripts/setup-cron.sh
   exec crond -f -l 8
+elif [ "$1" = "once" ]; then
+  exec /scripts/ping.sh
 else
   exec claude "$@"
 fi
