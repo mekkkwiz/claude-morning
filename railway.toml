@@ -4,5 +4,4 @@ dockerfilePath = "Dockerfile"
 
 [deploy]
 startCommand = "/entrypoint.sh once"
-cronSchedule = "0 1,6,11,16 * * *"
 restartPolicyType = "NEVER"
