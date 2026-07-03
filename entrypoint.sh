@@ -21,8 +21,6 @@ if [ "$1" = "daemon" ]; then
   exec crond -f -l 8
 elif [ "$1" = "once" ]; then
   exec /scripts/ping.sh
-elif [ "$1" = "idle" ]; then
-  exec sleep infinity
 else
   exec claude "$@"
 fi
